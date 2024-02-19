@@ -4,6 +4,10 @@
     "version": "0.1.0",
     "description": "Showing currency exchange rate",
     "host_permissions": ["https://api.nbp.pl/api/*"],
+    "content-scripts": [{
+      "matches": [],
+      "js": ["Chart.js"]
+    }],
     "action": {
       "default_icon": {
         "16": "assets/ext-icon.png",
