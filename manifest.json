@@ -1,20 +1,16 @@
 {
     "manifest_version": 3,
-    "name": "Exchange rate utility",
+    "name": "Currency Exchange Rate Chrome Extension",
     "version": "0.1.0",
     "description": "Showing currency exchange rate",
     "host_permissions": ["https://api.nbp.pl/api/*"],
-    "content-scripts": [{
-      "matches": [],
-      "js": ["Chart.js"]
-    }],
     "action": {
       "default_icon": {
         "16": "assets/ext-icon.png",
         "24": "assets/ext-icon.png",
         "32": "assets/ext-icon.png"
       },
-      "default_title": "My YT Bookmarks",
+      "default_title": "Currency Exchange Rate",
       "default_popup": "popup.html"
     }
 }
