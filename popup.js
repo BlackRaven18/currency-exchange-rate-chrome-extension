@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 const showPopupContent = async (currency = "USD") => {
     const exchangeRateData = await fetchExchangeRateFromApi(currency);
+    const historicalExchangeRatesData = await fetchHistoricalExchangeRatesFromApi(currency, 7);
     const {currencyCode, exchangeRate, date} = exchangeRateData;
     const exchangeRateElement = document.getElementsByClassName("exc-rate")[0];
 
@@ -56,6 +57,32 @@ const fetchExchangeRateFromApi = async (currency) => {
     })
     .catch(e => {
         console.error(e);
+    })
+}
+
+const fetchHistoricalExchangeRatesFromApi = async(currency, numberOfDays) => {
+    const url = `https://api.nbp.pl/api/exchangerates/rates/C/${currency}/last/${numberOfDays}?format=json`;
+
+    return fetch(url)
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        const {code, currency, rates, table} = data;
+
+        const historicalExchangeRatesData = [];
+
+        for(let i = 0; i < rates.length; i++){
+            const historicalExchangeRateData = {
+                currencyCode: code,
+                exchangeRate: rates[i].bid,
+                date: rates[i].effectiveDate
+            }
+
+            historicalExchangeRatesData.push(historicalExchangeRateData);
+        }
+
+        return historicalExchangeRatesData;
     })
 }
 
