@@ -1,3 +1,5 @@
+import { createChart } from "./MyChart.js";
+
 document.addEventListener("DOMContentLoaded", async () => {
 
     const usdBtn = document.getElementById("usd-btn");
@@ -17,12 +19,15 @@ const showPopupContent = async (currency = "USD") => {
     let exchangeRateParagraph = `
         <ul>
             <li><b>waluta:</b> ${currencyCode}</li>
-            <li><b>kurs:</b> ${exchangeRate}</li>
+            <li><b>cena kupna:</b> ${exchangeRate}</li>
             <li><b>data:</b> ${date}</li>
         </ul>
     `;
 
     exchangeRateElement.innerHTML = exchangeRateParagraph;
+
+    displayChart();
+
 }
 
 const handleUsdBtnClick = () => {
@@ -34,7 +39,7 @@ const handleEurBtnClick = () => {
 }
 
 const fetchExchangeRateFromApi = async (currency) => {
-    const url = `https://api.nbp.pl/api/exchangerates/rates/A/${currency}?format=json`;
+    const url = `https://api.nbp.pl/api/exchangerates/rates/C/${currency}?format=json`;
 
     return fetch(url)
     .then(response => {
@@ -45,13 +50,20 @@ const fetchExchangeRateFromApi = async (currency) => {
 
         return {
             currencyCode: code,
-            exchangeRate: rates[0].mid,
+            exchangeRate: rates[0].bid,
             date: rates[0].effectiveDate
         }
     })
     .catch(e => {
         console.error(e);
     })
+}
+
+const displayChart = () => {
+    const xValues = ['12.02.2023',60,70,80,90,100,110,120,130,140];
+    const yValues = [7,8,8,9,9,9,10,11,14,14];
+
+    createChart(xValues, yValues);
 
 }
 
