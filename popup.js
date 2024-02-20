@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 const showPopupContent = async (currency = "USD") => {
     const exchangeRateData = await fetchExchangeRateFromApi(currency);
     const historicalExchangeRatesData = await fetchHistoricalExchangeRatesFromApi(currency, 7);
+    
     const {currencyCode, exchangeRate, date} = exchangeRateData;
     const exchangeRateElement = document.getElementsByClassName("exc-rate")[0];
 
@@ -27,7 +28,10 @@ const showPopupContent = async (currency = "USD") => {
 
     exchangeRateElement.innerHTML = exchangeRateParagraph;
 
-    displayChart();
+    const dates = historicalExchangeRatesData.map(item => item.date);
+    const exchangeRates = historicalExchangeRatesData.map(item => item.exchangeRate);
+
+    displayChart(dates, exchangeRates);
 
 }
 
@@ -86,11 +90,12 @@ const fetchHistoricalExchangeRatesFromApi = async(currency, numberOfDays) => {
     })
 }
 
-const displayChart = () => {
-    const xValues = ['12.02.2023',60,70,80,90,100,110,120,130,140];
-    const yValues = [7,8,8,9,9,9,10,11,14,14];
+const displayChart = (xValues, yValues) => {
+    const min = Math.min(yValues);
+    const max = Math.max(yValues);
 
-    createChart(xValues, yValues);
+    console.log("bebe");
 
+    createChart(xValues, yValues, min, max);
 }
 

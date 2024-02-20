@@ -1,4 +1,4 @@
-export function createChart(xValues, yValues) {
+export function createChart(xValues, yValues, min, max) {
     return new Chart("myChart", {
       type: "line",
       data: {
@@ -14,8 +14,14 @@ export function createChart(xValues, yValues) {
       options: {
         legend: {display: false},
         scales: {
-          yAxes: [{ticks: {min: 6, max:16}}],
+          y: {
+            min: min,
+            max: max
+          }
         }
+        // scales: {
+        //   yAxes: [{ticks: {min: 6, max:16}}],
+        // }
       }
     });
 }
