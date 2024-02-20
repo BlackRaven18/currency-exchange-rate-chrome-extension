@@ -14,7 +14,11 @@ body {
     padding: 8px;
 }
 
-.btn-container {
+.currency-btn-container {
+    text-align: center;
+}
+
+.time-btn-contaner {
     text-align: center;
 }
 

@@ -1,19 +1,26 @@
 import { createChart } from "./MyChart.js";
 
+let currency = "USD";
+let periodOfTime = 7;
+
 document.addEventListener("DOMContentLoaded", async () => {
 
     const usdBtn = document.getElementById("usd-btn");
     const eurBtn = document.getElementById("eur-btn");
+    const sevenDaysBtn = document.getElementById("seven-days-btn");
+    const thirtyDaysBtn = document.getElementById("thirty-days-btn");
 
     usdBtn.addEventListener("click", handleUsdBtnClick);
     eurBtn.addEventListener("click", handleEurBtnClick)
+    sevenDaysBtn.addEventListener("click", handleSevenDaysBtnClick);
+    thirtyDaysBtn.addEventListener("click", handleThirtyDaysBtnClick);
 
     await showPopupContent();
 })
 
-const showPopupContent = async (currency = "USD") => {
+const showPopupContent = async () => {
     const exchangeRateData = await fetchExchangeRateFromApi(currency);
-    const historicalExchangeRatesData = await fetchHistoricalExchangeRatesFromApi(currency, 7);
+    const historicalExchangeRatesData = await fetchHistoricalExchangeRatesFromApi(currency, periodOfTime);
     
     const {currencyCode, exchangeRate, date} = exchangeRateData;
     const exchangeRateElement = document.getElementsByClassName("exc-rate")[0];
@@ -36,12 +43,26 @@ const showPopupContent = async (currency = "USD") => {
 }
 
 const handleUsdBtnClick = () => {
-    showPopupContent("USD");
+    currency = "USD";
+    showPopupContent();
 }
 
 const handleEurBtnClick = () => {
-    showPopupContent("EUR");
+    currency = "EUR";
+    showPopupContent();
 }
+
+const handleSevenDaysBtnClick = () => {
+    periodOfTime = 7;
+    showPopupContent();
+}
+
+const handleThirtyDaysBtnClick = () => {
+    periodOfTime = 30;
+    showPopupContent();
+}
+
+
 
 const fetchExchangeRateFromApi = async (currency) => {
     const url = `https://api.nbp.pl/api/exchangerates/rates/C/${currency}?format=json`;
