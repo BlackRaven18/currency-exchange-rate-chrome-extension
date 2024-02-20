@@ -94,7 +94,9 @@ const displayChart = (xValues, yValues) => {
     const min = Math.min(yValues);
     const max = Math.max(yValues);
 
-    console.log("bebe");
+    const chartContainer = document.getElementById("chart-container");
+    chartContainer.innerHTML = "";
+    chartContainer.innerHTML = `<canvas id="myChart" style="width:100%;max-width:700px"></canvas>`;
 
     createChart(xValues, yValues, min, max);
 }
